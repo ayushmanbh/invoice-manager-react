@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { jsPDF } from "jspdf"
 import { useGlobalContext } from '../context';
 
 const Dashboard = () => {
@@ -16,6 +17,23 @@ const Dashboard = () => {
     } else {
       setInvoicesToDisplay(invoices)
     }
+  }
+
+  const downloadAsPdf = (invoice) => {
+    const doc = new jsPDF()
+    const { id, itemName, description, quantity, price, discount, tax, status, total } = invoice
+    const text = `
+    Invoice Id: ${id},
+    Item: ${itemName},
+    Description: ${description},
+    Unit(s): ${quantity},
+    Unit price: $${price},
+    Discount: ${discount}%,
+    Tax: ${tax}%,
+    Total: $${total},
+    Status: ${status}`
+    doc.text(text, 20, 20)
+    doc.save(`${itemName}.pdf`)
   }
 
   useEffect(() => {
@@ -61,6 +79,12 @@ const Dashboard = () => {
                               <h4>Total: ${total}</h4>
                             </div>
                             <div className="action-btn">
+                              <button className='btn' onClick={() => {
+                                downloadAsPdf(invoice)
+                                history.push('/dashboard')
+                              }}>
+                                <i class="fas fa-cloud-download-alt"></i>
+                              </button>
                               <Link to={`/edit/${id}`} className='btn'>
                                 <i className="fas fa-pencil-alt"></i>
                               </Link>
