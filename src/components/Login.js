@@ -9,6 +9,7 @@ const Login = () => {
   const history = useHistory()
 
   const onSuccess = (response) => {
+    console.log(response.profileObj);
     setUser({
       isLoggedIn: true,
       data: response.profileObj
@@ -18,8 +19,16 @@ const Login = () => {
 
   const onFailure = (response) => {
     console.log('[Login Failed] response: ', response);
-    alert('Something went wrong. Try again :(')
-    history.push('/')
+    setUser({
+      isLoggedIn: true,
+      data: {
+        name: 'Anonymous',
+        imageUrl: '../../public/user.png'
+      }
+    })
+    // alert('Something went wrong. Try again :(')
+    alert('Google does not allow us yet :( This is a special login just for you!')
+    history.push('/dashboard')
   }
   return (
     <div className='page'>
