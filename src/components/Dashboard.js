@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useGlobalContext } from '../context';
 
@@ -17,6 +17,11 @@ const Dashboard = () => {
       setInvoicesToDisplay(invoices)
     }
   }
+
+  useEffect(() => {
+    filterInvoices('all')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invoices])
 
   const history = useHistory()
 
