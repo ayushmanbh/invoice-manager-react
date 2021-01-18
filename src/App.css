@@ -150,7 +150,7 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e02525;
+  background-color: rebeccapurple;
 }
 #header .title {
   margin: 0;
@@ -163,12 +163,12 @@ hr {
 }
 #header .auth-options button {
   padding: 0 1rem;
-  background-color: #b91b1b;
+  background-color: rgb(68, 6, 129);
   color: #ffffff;
   font-size: 1.1rem;
 }
 #header .auth-options button:hover {
-  background-color: #be3a3a;
+  background-color: rgb(118, 64, 172);
 }
 #header .profile {
   margin: 0.2rem;
