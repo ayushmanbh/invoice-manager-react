@@ -11,12 +11,16 @@ const AddInvoice = () => {
   const [discount, setDiscount] = useState(0)
   const [tax, setTax] = useState(0)
   const [status, setStatus] = useState('due')
+  const [isPending, setIsPending] = useState(false)
 
   const { user, addInvoice, calculateTotal } = useGlobalContext()
   const history = useHistory()
 
   const handleForm = (e) => {
     e.preventDefault()
+
+    setIsPending(true)
+
     const newInvoice = {
       id: uuidv4(),
       itemName,
@@ -28,7 +32,9 @@ const AddInvoice = () => {
       status,
       total: parseFloat(calculateTotal(quantity, price, discount, tax))
     }
+
     addInvoice(newInvoice)
+    setIsPending(false)
     history.push('/dashboard')
   }
 
@@ -90,10 +96,13 @@ const AddInvoice = () => {
 
               </div>
 
-              <div className="action-btn">
+              {!isPending && <div className="action-btn">
                 <input style={{ margin: '0' }} type="submit" value='Add' readOnly />
                 <Link to='/dashboard' className='btn'>Cancel</Link>
-              </div>
+              </div>}
+              {isPending && <div className="action-btn">
+                <input style={{ margin: '0' }} type="submit" value='Adding...' disabled readOnly />
+              </div>}
             </form>
           </>
         ) : (
